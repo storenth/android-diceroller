@@ -23,6 +23,9 @@ jobs:
     - name: Build and Unit tests with Gradle
       run: ./gradlew build --info
     - name: Accept the Android SDK package Licence
-      run: sdkmanager --licenses
+      run: |
+        ls -Alth
+        ls -ARl /usr/local/lib/android/sdk/
+        /usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager --licenses
     - name: Run UI test
       run: ./gradlew pixel3api30DebugAndroidTest -Pandroid.testoptions.manageddevices.emulator.gpu=swiftshader_indirect --info
