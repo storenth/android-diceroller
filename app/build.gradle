@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.diceroller"
-        minSdk 27
+        minSdk 30
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -24,12 +24,14 @@ android {
     testOptions {
         managedDevices {
             devices {
-                pixel3api27 (ManagedVirtualDevice) {
+                pixel3api30 (ManagedVirtualDevice) {
                     // Use device profiles you typically see in Android Studio.
                     device = "Pixel 3"
                     // Use only API levels 27 and higher.
-                    apiLevel = 27
+                    // ATDs currently support only API level 30.
+                    apiLevel = 30
                     // To include Google services, use "google".
+                    // You can also specify "google-atd" if you require Google Play Services.
                     systemImageSource = "aosp-atd"
                 }
             }

@@ -23,4 +23,4 @@ jobs:
     - name: Build and Unit tests with Gradle
       run: ./gradlew build --info
     - name: Run UI test
-      run: ./gradlew pixel3api27debugAndroidTest -Pandroid.testoptions.manageddevices.emulator.gpu=swiftshader_indirect --info
+      run: ./gradlew pixel3api30DebugAndroidTest -Pandroid.testoptions.manageddevices.emulator.gpu=swiftshader_indirect --info
