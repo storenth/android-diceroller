@@ -1,3 +1,5 @@
+import com.android.build.api.dsl.ManagedVirtualDevice
+
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
@@ -9,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.diceroller"
-        minSdk 24
+        minSdk 27
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -22,11 +24,11 @@ android {
     testOptions {
         managedDevices {
             devices {
-                pixel3api31 (com.android.build.api.dsl.ManagedVirtualDevice) {
+                pixel3api27 (ManagedVirtualDevice) {
                     // Use device profiles you typically see in Android Studio.
                     device = "Pixel 3"
                     // Use only API levels 27 and higher.
-                    apiLevel = 31
+                    apiLevel = 27
                     // To include Google services, use "google".
                     systemImageSource = "aosp"
                 }
