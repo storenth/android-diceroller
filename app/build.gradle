@@ -30,7 +30,7 @@ android {
                     // Use only API levels 27 and higher.
                     apiLevel = 27
                     // To include Google services, use "google".
-                    systemImageSource = "aosp"
+                    systemImageSource = "aosp-atd"
                 }
             }
         }
