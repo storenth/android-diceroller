@@ -24,6 +24,5 @@ jobs:
       run: ./gradlew build --info
     - name: Run UI test
       run: |
-        pwd
-        /usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager --licenses
+        yes | /usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager --licenses
         ./gradlew pixel3api30DebugAndroidTest -Pandroid.testoptions.manageddevices.emulator.gpu=swiftshader_indirect --info
