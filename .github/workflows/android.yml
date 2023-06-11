@@ -8,11 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, macos-latest]
-
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
     - name: set up JDK 17
@@ -25,6 +21,6 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Build and Unit tests with Gradle
-      run: ./gradlew build
+      run: ./gradlew build --stacktrace
     - name: Run UI test
-      run: ./gradlew pixel3api31debugAndroidTest -Pandroid.testoptions.manageddevices.emulator.gpu=swiftshader_indirect
+      run: ./gradlew pixel3api31debugAndroidTest -Pandroid.testoptions.manageddevices.emulator.gpu=swiftshader_indirect --stacktrace
