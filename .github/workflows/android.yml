@@ -48,21 +48,17 @@ jobs:
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
-          distribution: 'zulu'
+          distribution: 'temurin'
           java-version: 17
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
 
-      - name: Run instrumentation tests
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: 30
-          arch: x86_64
-          disable-animations: true
-          disk-size: 6000M
-          heap-size: 600M
-          script: ./gradlew pixel3api30DebugAndroidTest --info
+      - name: Accept Android SDKs Licences
+        run: yes | /usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager --licenses
+
+      - name: Run Instrumented tests
+        run: ./gradlew pixel3api30DebugAndroidTest -Pandroid.testoptions.manageddevices.emulator.gpu=swiftshader_indirect --info
 
       - name: Upload test reports
         if: always()
