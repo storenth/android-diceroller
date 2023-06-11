@@ -22,7 +22,12 @@ jobs:
       run: chmod +x gradlew
     - name: Build and Unit tests with Gradle
       run: ./gradlew build --info
-    - name: Run UI test
+    - name: Accept Android SDKs Licences
+      run: yes | /usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager --licenses
+    - name: Check kvm
       run: |
-        yes | /usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager --licenses
-        ./gradlew pixel3api30DebugAndroidTest -Pandroid.testoptions.manageddevices.emulator.gpu=swiftshader_indirect --info
+        sudo apt-get install cpu-checker
+        egrep -c '(vmx|svm)' /proc/cpuinfo
+        kvm-ok
+    - name: UI tests
+      run: ./gradlew pixel3api30DebugAndroidTest -Pandroid.testoptions.manageddevices.emulator.gpu=swiftshader_indirect --info
