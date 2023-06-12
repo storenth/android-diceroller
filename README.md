@@ -23,12 +23,13 @@ Instrumented tests therefore provide more fidelity than local tests, though they
 UI tests are usually Instrumented tests that verify the correct behavior of the UI.
 ### CI integration
 [Set up continuous integration](https://developer.android.com/studio/projects/continuous-integration)
-To run tests as part of the build, you need to either configure your continuous integration server to use the 
+To run tests as part of the build, you need to either configure your continuous integration server to use the
 [Android Emulator](https://developer.android.com/studio/run/emulator-commandline) or use Firebase Test Lab to run your tests, so
 [Gradle Managed Devices](https://developer.android.com/studio/test/gradle-managed-devices) or GMD improve consistency, performance, and reliability for your automated instrumented tests. This feature, available for API levels 27 and higher, allows you to configure virtual test devices in your project's Gradle files.
 The build system uses the configurations to fully manage—that is, create, deploy, and tear down—those devices when executing your automated tests.
-GMD runs with hardware acceleration by default (additional [setup](https://developer.android.com/studio/run/emulator-acceleration#vm-linux) needed), but to avoid settings use Automated Test Device (ATD).
-[Accept Licence]
+GMD runs with hardware acceleration by default (additional [hardware acceleration setup](https://developer.android.com/studio/run/emulator-acceleration#vm-linux) needed).
+To reduce overhead use Automated Test Device (ATD) (used in this project as part of GMD `aosp-atd`).
+[Accept Licence](https://developer.android.com/tools/sdkmanager#accept-licenses)
 ```bash
 ./gradlew build
 ./gradlew pixel3api30DebugAndroidTest
