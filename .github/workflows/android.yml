@@ -8,11 +8,8 @@ on:
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, macos-latest]
-
+    runs-on: macOS-latest # enables hardware acceleration in the virtual machine
+    timeout-minutes: 55
     steps:
     - uses: actions/checkout@v3
     - name: set up JDK 17
@@ -24,5 +21,23 @@ jobs:
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
-    - name: Build with Gradle
-      run: ./gradlew build
+    - name: Build and Unit tests with Gradle
+      run: |
+        ./gradlew clean
+        ./gradlew build --info
+
+    - name: Accept Android SDKs Licences
+      run: yes | /Users/runner/Library/Android/sdk/cmdline-tools/latest/bin/sdkmanager --licenses
+
+    - name: Run Instrumented tests
+      run: |
+        /Users/runner/Library/Android/sdk/emulator/emulator -list-avds
+        ./gradlew cleanManagedDevices --unused-only --info
+        ./gradlew pixel3api30DebugAndroidTest -Pandroid.testoptions.manageddevices.emulator.gpu=swiftshader_indirect --info
+
+    - name: Upload test reports
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-reports
+        path: '*/build/reports/androidTests'

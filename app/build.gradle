@@ -1,3 +1,5 @@
+import com.android.build.api.dsl.ManagedVirtualDevice
+
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
@@ -9,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.diceroller"
-        minSdk 24
+        minSdk 30
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -19,7 +21,22 @@ android {
             useSupportLibrary true
         }
     }
-
+    testOptions {
+        managedDevices {
+            devices {
+                pixel3api30 (ManagedVirtualDevice) {
+                    // Use device profiles you typically see in Android Studio.
+                    device = "Pixel 3"
+                    // Use only API levels 27 and higher.
+                    // ATDs currently support only API level 30.
+                    apiLevel = 30
+                    // To include Google services, use "google".
+                    // You can also specify "google-atd" if you require Google Play Services.
+                    systemImageSource = "aosp-atd"
+                }
+            }
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -48,10 +65,10 @@ android {
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.8.0'
+    implementation 'androidx.core:core-ktx:1.10.1'
     implementation platform('org.jetbrains.kotlin:kotlin-bom:1.8.0')
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
-    implementation 'androidx.activity:activity-compose:1.5.1'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
+    implementation 'androidx.activity:activity-compose:1.7.2'
     implementation platform('androidx.compose:compose-bom:2022.10.00')
     implementation 'androidx.compose.ui:ui'
     implementation 'androidx.compose.ui:ui-graphics'
