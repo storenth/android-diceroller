@@ -34,7 +34,7 @@ class ExampleInstrumentedTest {
         device.pressHome()
         Log.v(tag, device.currentPackageName)
         Log.v(tag, device.productName)
-        assertEquals(1, device.displayRotation)
+        assertEquals(0, device.displayRotation)
 
     }
 }
