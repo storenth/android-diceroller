@@ -1,16 +1,17 @@
 package com.example.diceroller
 
 import android.util.Log
-import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.uiautomator.UiDevice
+import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.By
+import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.UiObject2
-
+import androidx.test.uiautomator.Until
+import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.io.File
 
-import org.junit.Assert.*
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -29,10 +30,14 @@ class ExampleInstrumentedTest {
     @Test
     fun textOnBackground() {
         // Text rendered after app is booted.
-        var device: UiDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
-        Log.v(tag, device.currentPackageName)
+        val device: UiDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
+
+        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
+        val path = File(appContext.getExternalFilesDir("screenshots"), "1.png")
+        Log.v(tag, "Save screenshot: $path")
+        device.takeScreenshot(path)
+
         device.pressHome()
-        Log.v(tag, device.currentPackageName)
         Log.v(tag, device.productName)
         assertEquals(0, device.displayRotation)
 
