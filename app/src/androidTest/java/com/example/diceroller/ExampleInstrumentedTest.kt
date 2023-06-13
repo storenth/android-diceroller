@@ -41,7 +41,7 @@ class ExampleInstrumentedTest {
 
         // Wait for launcher
         val launcherPackage: String = device.launcherPackageName
-        assert(launcherPackage.isEmpty())
+        assertFalse("Failed to launch the dev app", launcherPackage.isEmpty())
         device.wait(
             Until.hasObject(By.pkg(launcherPackage).depth(0)),
             LAUNCH_TIMEOUT
@@ -67,10 +67,7 @@ class ExampleInstrumentedTest {
         assertEquals("com.example.diceroller", appContext.packageName)
     }
     @Test
-    fun textOnBackground() {
-        // Text rendered after app is booted.
-        device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
-
+    fun takeScreenshot() {
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
         val path = File(appContext.getExternalFilesDir("screenshots"), "1.png")
         Log.v(tag, "Save screenshot: $path")
@@ -78,6 +75,20 @@ class ExampleInstrumentedTest {
 
         Log.v(tag, device.productName)
         assertEquals(0, device.displayRotation)
-
+    }
+    @Test
+    fun getWidgetAllText() {
+        val widgets = device.findObjects(By.clazz(android.widget.TextView::class.java))
+        for (view in widgets) {
+            Log.v(tag, "view.text=${view.text}")  // `11:20` (current time clock) & `Hello Android!`
+            Log.v(tag, "view.className=${view.className}")  // android.widget.TextView
+            Log.v(tag, "view.displayId=${view.displayId}")  // 0
+            Log.v(tag, "view.isFocused=${view.isFocused}")  // false
+            Log.v(tag, "view.isClickable=${view.isClickable}")  // false
+            Log.v(tag, "view.isSelected=${view.isSelected}")  // false
+            Log.v(tag, "view.resourceName=${view.resourceName}")  // null & com.android.systemui:id/clock
+            Log.v(tag, "view.parent=${view.parent}")  // androidx.test.uiautomator.UiObject2@ab98f
+        }
+        assert(widgets.any {it.text == "Hello Android!"})
     }
 }
