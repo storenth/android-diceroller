@@ -78,6 +78,13 @@ class ExampleInstrumentedTest {
     }
     @Test
     fun getWidgetAllText() {
+        val wdgt = device.findObject(By.text("Hello Android!"))
+        Log.v(tag, "wdgt=${wdgt.text}")
+        Log.v(tag, "wdgt=${wdgt.className}")
+        Log.v(tag, "wdgt=${wdgt.displayId}")
+        Log.v(tag, "wdgt=${wdgt.resourceName}")
+        Log.v(tag, "wdgt=${wdgt.parent}")
+
         val widgets = device.findObjects(By.clazz(android.widget.TextView::class.java))
         for (view in widgets) {
             Log.v(tag, "view.text=${view.text}")  // `11:20` (current time clock) & `Hello Android!`
@@ -89,6 +96,6 @@ class ExampleInstrumentedTest {
             Log.v(tag, "view.resourceName=${view.resourceName}")  // null & com.android.systemui:id/clock
             Log.v(tag, "view.parent=${view.parent}")  // androidx.test.uiautomator.UiObject2@ab98f
         }
-        assert(widgets.any {it.text == "Hello Android!"})
+        assertTrue(widgets.any {it.text == "Hello Android!"})
     }
 }
