@@ -23,14 +23,16 @@ Instrumented tests therefore provide more fidelity than local tests, though they
 UI tests are usually Instrumented tests that verify the correct behavior of the UI.
 ### CI integration
 [Set up continuous integration](https://developer.android.com/studio/projects/continuous-integration)
-To run tests as part of the build, you need to either configure your continuous integration server to use the 
+To run tests as part of the build, you need to either configure your continuous integration server to use the
 [Android Emulator](https://developer.android.com/studio/run/emulator-commandline) or use Firebase Test Lab to run your tests, so
 [Gradle Managed Devices](https://developer.android.com/studio/test/gradle-managed-devices) or GMD improve consistency, performance, and reliability for your automated instrumented tests. This feature, available for API levels 27 and higher, allows you to configure virtual test devices in your project's Gradle files.
 The build system uses the configurations to fully manage—that is, create, deploy, and tear down—those devices when executing your automated tests.
-GMD runs with hardware acceleration by default (additional [setup](https://developer.android.com/studio/run/emulator-acceleration#vm-linux) needed), but to avoid settings use Automated Test Device (ATD).
-[Accept Licence]
+GMD runs with hardware acceleration by default (additional [hardware acceleration setup](https://developer.android.com/studio/run/emulator-acceleration#vm-linux) needed).
+To reduce overhead use Automated Test Device (ATD) (used in this project as part of GMD `aosp-atd`).
+[Accept Licence](https://developer.android.com/tools/sdkmanager#accept-licenses)
 ```bash
 ./gradlew build
+./gradlew cleanManagedDevices
 ./gradlew pixel3api30DebugAndroidTest
 ```
 
@@ -42,4 +44,9 @@ UiAutomator does just that, by delivering input events in a way a regular user w
 4. [Write automated tests with UI Automator](https://developer.android.com/training/testing/other-components/ui-automator)
 
 ## Known issues
-1. Unresolved reference after changing SDK versions: `File > Invalidate Caches`
+1. Unresolved reference after changing SDK versions: `File > Invalidate Caches` or press `Sync Project With Gradle Files` on the top right corner
+2. After run `./gradlew pixel3api30DebugAndroidTest` (GMD AVD) faced with
+```bash
+Task :app:pixel3api30Setup FAILED > java.lang.IllegalStateException: Gradle was not able to complete device setup for: dev30_aosp_atd_arm64-v8a_Pixel_3`
+``` 
+need to remove managed devices first: `./gradlew cleanManagedDevices`
